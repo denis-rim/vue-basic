@@ -1,30 +1,52 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div class="app">
+    <post-form @create="createPost" />
+    <post-list :posts="posts" />
+  </div>
 </template>
 
+<script>
+import PostList from "@/components/PostList";
+import PostForm from "@/components/PostForm";
+
+export default {
+  components: {
+    PostList,
+    PostForm,
+  },
+  data() {
+    return {
+      posts: [
+        { id: 1, title: "About Javascript 1", body: "A lot of text" },
+        { id: 2, title: "About Javascript 2", body: "A lot of text" },
+        { id: 3, title: "About Javascript 3", body: "A lot of text" },
+        { id: 4, title: "About Javascript 4", body: "A lot of text" },
+      ],
+      title: "",
+      body: "",
+    };
+  },
+  methods: {
+    createPost(post) {
+      this.posts.push(post);
+    },
+  },
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
 }
 </style>
