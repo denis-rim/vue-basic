@@ -40,7 +40,7 @@ export default {
 form {
   display: flex;
   flex-direction: column;
-  width: 70%;
+  padding: 25px 30px;
 }
 
 .button-wrapper {
