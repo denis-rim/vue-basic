@@ -2,6 +2,12 @@
   <div class="app">
     <h1 style="margin-bottom: 25px">Page with posts</h1>
 
+    <my-input
+      v-model="searchQuery"
+      style="max-width: 70%"
+      placeholder="Type query"
+    />
+
     <div class="app-buttons">
       <my-button @click="showDialog">Add post</my-button>
       <my-select v-model="selectedSort" :options="sortOptions" />
@@ -14,7 +20,7 @@
     </my-dialog>
 
     <post-list
-      :posts="sortedPosts"
+      :posts="sortedAndSearchedPosts"
       @remove="removePost"
       v-if="!isPostsLoading"
     />
@@ -30,6 +36,7 @@ import PostForm from "@/components/PostForm";
 import MyDialog from "@/components/ui/MyDialog";
 import MyButton from "@/components/ui/MyButton";
 import MySelect from "@/components/ui/MySelect";
+import MyInput from "@/components/ui/MyInput";
 
 export default {
   components: {
@@ -38,15 +45,18 @@ export default {
     MyDialog,
     PostList,
     PostForm,
+    MyInput,
   },
 
   data() {
     return {
       posts: [],
       dialogVisible: false,
-      modificationValue: "",
       isPostsLoading: true,
-      selectedSort: "",
+      modificationValue: "",
+      selectedSort: "title",
+      searchQuery: "",
+
       sortOptions: [
         { value: "title", name: "Title" },
         { value: "body", name: "Body" },
@@ -88,6 +98,13 @@ export default {
         return post1[this.selectedSort]?.localeCompare(
           post2[this.selectedSort]
         );
+      });
+    },
+    sortedAndSearchedPosts() {
+      return this.sortedPosts.filter((post) => {
+        return post[this.selectedSort]
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase());
       });
     },
   },

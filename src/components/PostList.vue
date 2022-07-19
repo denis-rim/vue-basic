@@ -17,8 +17,9 @@
 
 <script>
 import PostItem from "@/components/PostItem";
+import MyInput from "@/components/ui/MyInput";
 export default {
-  components: { PostItem },
+  components: { MyInput, PostItem },
   props: {
     posts: {
       type: Array,
